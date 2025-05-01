@@ -29,7 +29,7 @@ export const CommonFormSchema = z.object({
   name_ne: z.string().min(1, { message: "Name is required" }),
   name_en: z.string().min(1, { message: "Name is required" }),
 
-  dob: z
+  dob: z //this logic works , but not showing message
     .string()
     .min(1, { message: "जन्म मिति आवश्यक छ।" })
     .superRefine((dob, ctx) => {
