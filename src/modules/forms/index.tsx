@@ -25,7 +25,6 @@ import { CommonFormSchema } from "./schemas/common";
 export default function Forms() {
   const form = useForm<CommonFormSchema>({
     resolver: zodResolver(CommonFormSchema),
-    // mode: "onChange",
   });
 
   const [passportPreview, setPassportPreview] = useState<string | null>(null);
@@ -349,7 +348,7 @@ export default function Forms() {
                     <FormControl>
                       <div className="flex flex-col gap-2">
                         <div className="relative">
-                          {/* <FileImage className="absolute left-3 top-3 h-4 w-4 text-gray-500" /> */}
+                          <FileImage className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                           <Input
                             type="file"
                             accept=".jpg,.jpeg"
@@ -390,7 +389,6 @@ export default function Forms() {
               type="button"
               onClick={form.handleSubmit(onSubmit)}
               className="w-full"
-              // disabled={!form.formState.isValid}
             >
               Submit Registration
             </Button>
