@@ -11,18 +11,32 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { api } from "@/api/axios";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Calendar, FileImage, Phone, Upload, User, Users } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NepaliDatePicker } from "react-nepali-datepicker-bs";
 import "react-nepali-datepicker-bs/dist/index.css";
-
-import { MinuteUpload } from "./components/minute-upload";
+import { toast } from "sonner";
 import { CommonFormSchema } from "./schemas/common";
 
 export default function Forms() {
+  const getSectorDetails = async () => {
+    try {
+      const response = await api.get("/sector");
+      const data = response.data;
+      if (!data) throw new Error("Unable to get sector data, please try again");
+    } catch {
+      toast.error("Unable to fetch sector details.");
+    }
+  };
+
+  useEffect(() => {
+    getSectorDetails();
+  }, []);
+
   const form = useForm<CommonFormSchema>({
     resolver: zodResolver(CommonFormSchema),
   });
@@ -58,7 +72,6 @@ export default function Forms() {
 
   return (
     <div className="flex h-full flex-col gap-4 md:overflow-hidden p-8 lg:max-w-4/5 xl:max-w-3/5 mx-auto">
-      <MinuteUpload />
       <Card className="shadow-lg p-6">
         <Form {...form}>
           <div onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -79,7 +92,7 @@ export default function Forms() {
             <div className="flex flex-col items-center mb-6">
               <FormField
                 control={form.control}
-                name="passport_photo"
+                name="photo"
                 render={({
                   field: { value, onChange, ref, ...fieldProps },
                 }) => (
@@ -230,7 +243,7 @@ export default function Forms() {
               {/* Phone Number Field */}
               <FormField
                 control={form.control}
-                name="phone_number"
+                name="phone"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
@@ -261,17 +274,17 @@ export default function Forms() {
               {/* Party Number Field */}
               <FormField
                 control={form.control}
-                name="party_number"
+                name="party_no"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>पार्टी नं.</FormLabel>
+                    <FormLabel>पार्टी सदस्यता नं.</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <div className="size-9 absolute inset-y-0 left-0 flex justify-center items-center">
                           <Users className=" h-4 w-4 text-gray-500" />
                         </div>
                         <Input
-                          placeholder="पार्टी नं. छ भने हल्नुहोला (अतिरिक्त)"
+                          placeholder="पार्टी सदस्यता नं. (वैकल्पिक)" //optional
                           className="pl-10"
                           {...field}
                         />
@@ -282,6 +295,31 @@ export default function Forms() {
                 )}
               />
             </div>
+            <FormField
+              control={form.control}
+              name="citizenship_no"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    नागरिकता नं.
+                    <RequiredAsterisk />
+                  </FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <div className="size-9 absolute inset-y-0 left-0 flex justify-center items-center">
+                        <Phone className=" h-4 w-4 text-gray-500" />
+                      </div>
+                      <Input
+                        placeholder="नागरिकता  नं."
+                        className="pl-10"
+                        {...field}
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             {/* Uploads Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">

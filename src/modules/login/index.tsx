@@ -11,6 +11,7 @@ import { useLoginForm } from "./use-login-form";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Card } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
 
 export default function LoginForm() {
   const { onSubmit, loading, ...form } = useLoginForm();
@@ -79,10 +80,13 @@ export default function LoginForm() {
                     <Button
                       type="submit"
                       disabled={loading}
-                      loading={loading}
                       className="w-full bg-primary hover:bg-[#A22556] text-white py-3 rounded-md"
                     >
-                      लग-इन
+                      {loading ? (
+                        <Loader2 className="animate-spin h-5 w-5 mr-2" />
+                      ) : (
+                        "लग-इन"
+                      )}
                     </Button>
                   </form>
                 </Form>

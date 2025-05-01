@@ -54,18 +54,24 @@ export const CommonFormSchema = z.object({
       }
     }),
 
-  phone_number: z
+  phone: z
     .string()
     .length(10, { message: "Phone number must be 10 digits" })
     .regex(/^\d{10}$/, { message: "Phone number must contain only digits" }),
 
-  party_number: z.string().optional(),
+  party_no: z
+    .string()
+    .length(10)
+    .regex(/^\d{7}$/)
+    .optional(),
 
-  passport_photo: z
+  photo: z
     .custom<File>((file) => file instanceof File, "फोटो अपलोड गर्नुहोस्।")
     .refine(isJpeg, {
       message: "JPG/JPEG मात्र स्वीकार्य छ।",
     }),
+
+  citizenship_no: z.string({ message: "Citizenship no. is required." }),
 
   citizenship_front: z
     .custom<File>(

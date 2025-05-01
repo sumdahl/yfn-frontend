@@ -26,11 +26,14 @@ export const useLoginForm = () => {
         setLoading(true);
         const response = await api.post("/auth/login", data);
         const res = response.data?.data;
-        if (!data) throw new Error("Unable to login, please try again");
+        if (!res.access_token || !res?.user_details) {
+          throw new Error("Invalid login response");
+        }
         login(res.access_token, res.user_details);
-        navigate("/forms", { replace: true });
-      } catch {
-        toast.error("Unable to login, please try again");
+        navigate("/minute", { replace: true });
+      } catch (error: any) {
+        console.log("Login failed", error);
+        toast.error(error.message || "Unable to login, please try again.");
       } finally {
         setLoading(false);
       }
