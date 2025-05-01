@@ -80,7 +80,7 @@ export default function LoginForm() {
                       type="submit"
                       disabled={loading}
                       loading={loading}
-                      className="w-full bg-primary hover:bg-[#1e3370] text-white py-3 rounded-md"
+                      className="w-full bg-primary hover:bg-[#A22556] text-white py-3 rounded-md"
                     >
                       लग-इन
                     </Button>

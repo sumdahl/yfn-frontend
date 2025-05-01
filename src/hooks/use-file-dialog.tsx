@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useIsomorphicEffect } from "./use-isomorphic-effect";
 
-
 export interface UseFileDialogOptions {
   multiple?: boolean;
   accept?: string;

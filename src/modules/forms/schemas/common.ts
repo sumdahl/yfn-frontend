@@ -26,19 +26,20 @@ const isJpeg = (file?: File) =>
   !!file && (file.type === "image/jpeg" || file.type === "image/jpg");
 
 export const CommonFormSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
+  name_ne: z.string().min(1, { message: "Name is required" }),
+  name_en: z.string().min(1, { message: "Name is required" }),
 
   dob: z
     .string()
-    .min(1, { message: "Date of birth is required" })
+    .min(1, { message: "जन्म मिति आवश्यक छ।" })
     .superRefine((dob, ctx) => {
-      const ad = BSToAD(dob); // Assumes valid ISO date string
+      const ad = BSToAD(dob); // Convert BS to AD
       const age = getAgeFromBirthdate(ad);
 
       if (age < 18) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "You must be at least 18 years old",
+          message: "न्यूनतम उमेर १८ वर्ष हुनुपर्छ।",
           path: ["dob"],
         });
       }
@@ -46,7 +47,8 @@ export const CommonFormSchema = z.object({
       if (age > 40) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "You must be 40 years old or younger",
+          message:
+            "उमेर ४० वर्ष माथि को प्रतिनिधिलाई आवेदन दिन निषेध गरिएको छ।",
           path: ["dob"],
         });
       }
@@ -60,19 +62,28 @@ export const CommonFormSchema = z.object({
   party_number: z.string().optional(),
 
   passport_photo: z
-    .instanceof(File, { message: "Passport photo is required" })
-    .refine(isJpeg, { message: "Passport photo must be a JPG/JPEG file" })
-    .optional(),
+    .custom<File>((file) => file instanceof File, "फोटो अपलोड गर्नुहोस्।")
+    .refine(isJpeg, {
+      message: "JPG/JPEG मात्र स्वीकार्य छ।",
+    }),
 
   citizenship_front: z
-    .instanceof(File, { message: "Front side of citizenship is required" })
-    .refine(isJpeg, { message: "Front side must be a JPG/JPEG file" })
-    .optional(),
+    .custom<File>(
+      (file) => file instanceof File,
+      "अगाडिको नागरिकता अपलोड गर्नुहोस्।"
+    )
+    .refine(isJpeg, {
+      message: "JPG/JPEG मात्र स्वीकार्य छ।",
+    }),
 
   citizenship_back: z
-    .instanceof(File, { message: "Back side of citizenship is required" })
-    .refine(isJpeg, { message: "Back side must be a JPG/JPEG file" })
-    .optional(),
+    .custom<File>(
+      (file) => file instanceof File,
+      "पछाडिको नागरिकता अपलोड गर्नुहोस्।"
+    )
+    .refine(isJpeg, {
+      message: "JPG/JPEG मात्र स्वीकार्य छ।",
+    }),
 });
 
 export type CommonFormSchema = z.infer<typeof CommonFormSchema>;

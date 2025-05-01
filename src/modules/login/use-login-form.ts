@@ -28,7 +28,7 @@ export const useLoginForm = () => {
         const res = response.data?.data;
         if (!data) throw new Error("Unable to login, please try again");
         login(res.access_token, res.user_details);
-        navigate("/minute", { replace: true });
+        navigate("/forms", { replace: true });
       } catch {
         toast.error("Unable to login, please try again");
       } finally {
