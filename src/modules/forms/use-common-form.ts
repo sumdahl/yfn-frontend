@@ -22,7 +22,7 @@ export const useCommonForm = () => {
   const form = useForm<CommonFormSchema>({
     resolver: zodResolver(CommonFormSchema),
     defaultValues: {
-      name_ne: "",
+      name: "",
       name_en: "",
       dob: undefined,
       phone: "",
@@ -46,9 +46,13 @@ export const useCommonForm = () => {
 
       try {
         const formData = new FormData();
-        formData.append("name_ne", data.name_ne);
+        formData.append("name", data.name);
         formData.append("name_en", data.name_en);
-        formData.append("dob", data.dob?.toString() ?? "");
+        formData.append(
+          "dob",
+          data.dob ? new Date(data.dob).toISOString().split("T")[0] : ""
+        );
+
         formData.append("phone", data.phone);
         formData.append("party_no", data.party_no);
         formData.append("citizenship_no", data.citizenship_no);
@@ -58,6 +62,8 @@ export const useCommonForm = () => {
           formData.append("citizenship_front", data.citizenship_front);
         if (data.citizenship_back)
           formData.append("citizenship_back", data.citizenship_back);
+
+        console.log(formData);
 
         const response = await api.patch(`/user/${userId}`, formData, {
           headers: {

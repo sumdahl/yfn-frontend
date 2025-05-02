@@ -153,7 +153,7 @@ export default function Forms() {
                     {/* Name Field */}
                     <FormField
                       control={form.control}
-                      name="name_ne"
+                      name="name"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>

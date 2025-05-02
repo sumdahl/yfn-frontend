@@ -27,8 +27,8 @@ export default function LoginForm() {
                   <img
                     src="/yfn-wbg.png"
                     alt="National Youth Federation Nepal"
-                    width={120}
-                    height={120}
+                    width={140}
+                    height={140}
                     className="mx-auto mb-4"
                   />
 

@@ -24,7 +24,7 @@ const isJpeg = (file?: File) =>
   !!file && (file.type === "image/jpeg" || file.type === "image/jpg");
 
 export const CommonFormSchema = z.object({
-  name_ne: z.string().min(1, { message: "Name is required" }),
+  name: z.string().min(1, { message: "Name is required" }),
   name_en: z.string().min(1, { message: "Name is required" }),
 
   dob: z.coerce.date().superRefine((dob, ctx) => {
@@ -60,7 +60,12 @@ export const CommonFormSchema = z.object({
       message: "JPG/JPEG मात्र स्वीकार्य छ।",
     }),
 
-  citizenship_no: z.string().max(50, { message: "नागरिकता नं" }),
+  citizenship_no: z
+    .string()
+    .max(50, { message: "नागरिकता नं ५० अक्षरभन्दा कम हुनुपर्छ" })
+    .regex(/^[0-9-]+$/, {
+      message: "नागरिकता नं केवल अंक र '-' मात्र हुनुपर्छ",
+    }),
 
   citizenship_front: z
     .custom<File>(
