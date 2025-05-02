@@ -25,12 +25,13 @@ export default function LoginForm() {
               <div className="bg-primary text-white text-center p-6 sm:p-8 w-full lg:w-1/2 flex flex-col items-center justify-center md:py-16">
                 <div className="max-w-md mx-auto">
                   <img
-                    src="/logo.png"
-                    alt="Nepal Government Emblem"
+                    src="/yfn-logo.jpg"
+                    alt="National Youth Federation Nepal"
                     width={120}
                     height={120}
-                    className="mx-auto mb-4"
+                    className="mx-auto mb-4 rounded-lg bg-gray-200 w-80 h-80"
                   />
+
                   <h1 className="text-2xl font-medium mb-2">नेपाल सरकार</h1>
                   <div className="border-t border-gray-300/30 max-w-full my-6" />
                   <h2 className="text-xl font-bold mb-2">

@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CommonFormSchema } from "./schemas/common";
 import { useCallback, useState } from "react";
+import { api } from "@/api/axios";
 
 import { useSessionStore } from "@/stores/sector-store";
 
@@ -10,7 +11,10 @@ export const useCommonForm = () => {
     (s) => s.sectorResponse?.sector_list[1].sector_member_list[0]
   );
 
-  const userId = sectorMemberList?.id;
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // const userId = sectorMemberList?.id;
+  const userId = 1942;
 
   // use that userId here to perform patch request
   //user/:userId
@@ -31,24 +35,53 @@ export const useCommonForm = () => {
     mode: "onChange", // Trigger validation on change for immediate feedback
   });
 
-  // const onSubmit = useCallback(async (data: CommonFormSchema) => {
-  //   try {
-  //     //call to api axios
+  const onSubmit = useCallback(
+    async (data: CommonFormSchema) => {
+      if (!userId) {
+        console.error("User ID not available");
+        return;
+      }
 
-  //     setLoading(true);
-  //     const response = await api.patch(`/user/${userId}`);
-  //     const res = response.data?.data;
-  //     console.log(res);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error("Error,", error);
+      setLoading(true);
 
-  //   }
-  // });
+      try {
+        const formData = new FormData();
+        formData.append("name_ne", data.name_ne);
+        formData.append("name_en", data.name_en);
+        formData.append("dob", data.dob?.toString() ?? "");
+        formData.append("phone", data.phone);
+        formData.append("party_no", data.party_no);
+        formData.append("citizenship_no", data.citizenship_no);
 
-  return {
-    ...form,
-    loading: false,
-    onSubmit: form.handleSubmit((e) => console.log(e), console.error),
-  };
+        if (data.photo) formData.append("photo", data.photo);
+        if (data.citizenship_front)
+          formData.append("citizenship_front", data.citizenship_front);
+        if (data.citizenship_back)
+          formData.append("citizenship_back", data.citizenship_back);
+
+        const response = await api.patch(`/user/${userId}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        const result = await response.data;
+        console.log("Patch success:", result);
+      } catch (error) {
+        console.error("Patch error:", error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [userId]
+  );
+  // return {
+  //   ...form,
+  //   loading: false,
+  //   onSubmit: form.handleSubmit((e) => console.log(e), console.error),
+  // };
+
+  return { ...form, loading, onSubmit: form.handleSubmit((e) => onSubmit(e)) };
 };
+
+// return { ...form, loading, onSubmit: handleSubmit((e) => onSubmit(e)) };

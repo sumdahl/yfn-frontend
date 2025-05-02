@@ -433,7 +433,7 @@ export default function Forms() {
                     />
                   </div>
 
-                  <Button className="w-full">
+                  <Button className="w-full" type="submit" disabled={loading}>
                     {loading ? (
                       <Loader2 className="animate-spin h-5 w-5 mr-2" />
                     ) : (

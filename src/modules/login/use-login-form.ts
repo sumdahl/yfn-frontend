@@ -36,15 +36,23 @@ export const useLoginForm = () => {
         }
         login(res.access_token, res.user_details);
 
-        //Fetch /sector data
+        // //Fetch /sector data
+        // const sectorRes = await api.get("/sector");
+        // const sectorRes = await fetch(
+        //   ""
+        // );
+        // const sectorData = sectorRes.json();
+        // console.log(sectorData);
         const sectorRes = await api.get("/sector");
         const sectorData = sectorRes.data;
 
-        if (!sectorData?.success || !sectorData?.data) {
-          throw new Error("Failed to fetch sector data.");
-        }
+        console.log(sectorData);
 
-        setSectorResponse(sectorData);
+        // if (!sectorData?.success || !sectorData?.data) {
+        //   throw new Error("Failed to fetch sector data.");
+        // }
+
+        // setSectorResponse(sectorData);    //setSectorResponse
 
         navigate("/forms", { replace: true });
       } catch (error: any) {
@@ -54,7 +62,7 @@ export const useLoginForm = () => {
         setLoading(false);
       }
     },
-    [login, navigate, setSectorResponse]
+    [login, navigate]
   );
 
   return { ...form, loading, onSubmit: handleSubmit((e) => onSubmit(e)) };
