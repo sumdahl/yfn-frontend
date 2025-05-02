@@ -138,7 +138,7 @@ export const MinuteUpload = () => {
             {isUploading ? (
               <>
                 <Loader2 className="animate-spin h-5 w-5 mr-2" />
-                Uploading...
+                Uploading..
               </>
             ) : (
               "Upload a Minute"
