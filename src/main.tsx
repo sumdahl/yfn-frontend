@@ -19,9 +19,9 @@ createRoot(document.getElementById("root")!).render(
         <Route
           path="/forms"
           element={
-            <ProtectedRoute>
-              <Forms />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <Forms />
+            // </ProtectedRoute>
           }
         />
         <Route

@@ -11,32 +11,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { api } from "@/api/axios";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Calendar, FileImage, Phone, Upload, User, Users } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NepaliDatePicker } from "react-nepali-datepicker-bs";
 import "react-nepali-datepicker-bs/dist/index.css";
-import { toast } from "sonner";
 import { CommonFormSchema } from "./schemas/common";
 
 export default function Forms() {
-  const getSectorDetails = async () => {
-    try {
-      const response = await api.get("/sector");
-      const data = response.data;
-      if (!data) throw new Error("Unable to get sector data, please try again");
-    } catch {
-      toast.error("Unable to fetch sector details.");
-    }
-  };
-
-  useEffect(() => {
-    getSectorDetails();
-  }, []);
-
   const form = useForm<CommonFormSchema>({
     resolver: zodResolver(CommonFormSchema),
   });
@@ -260,7 +244,7 @@ export default function Forms() {
                           className="pl-10"
                           {...field}
                           maxLength={10}
-                          onKeyPress={(e) => {
+                          onKeyUp={(e) => {
                             if (!/[0-9]/.test(e.key)) e.preventDefault();
                           }}
                         />
@@ -294,32 +278,32 @@ export default function Forms() {
                   </FormItem>
                 )}
               />
-            </div>
-            <FormField
-              control={form.control}
-              name="citizenship_no"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    नागरिकता नं.
-                    <RequiredAsterisk />
-                  </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <div className="size-9 absolute inset-y-0 left-0 flex justify-center items-center">
-                        <Phone className=" h-4 w-4 text-gray-500" />
+              <FormField
+                control={form.control}
+                name="citizenship_no"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      नागरिकता नं.
+                      <RequiredAsterisk />
+                    </FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <div className="size-9 absolute inset-y-0 left-0 flex justify-center items-center">
+                          <Phone className=" h-4 w-4 text-gray-500" />
+                        </div>
+                        <Input
+                          placeholder="नागरिकता  नं."
+                          className="pl-10"
+                          {...field}
+                        />
                       </div>
-                      <Input
-                        placeholder="नागरिकता  नं."
-                        className="pl-10"
-                        {...field}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             {/* Uploads Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">

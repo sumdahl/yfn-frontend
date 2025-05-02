@@ -18,11 +18,11 @@ export default function LoginForm() {
   return (
     <div>
       <Card className="bg-muted flex justify-center items-center min-h-screen">
-        <div className="flex flex-col items-center justify-center mx-auto md:mx-0 w-4/5 md:min-w-4xl max-w-6xl">
+        <div className="flex flex-col items-center justify-center mx-auto w-11/12 sm:w-4/5 md:min-w-4xl max-w-6xl">
           <div className="w-full">
-            <div className="flex flex-col lg:flex-row lg:items-stretch shadow-lg rounded-lg overflow-hidden">
-              {/* Blue section with logo and title */}
-              <div className="bg-primary text-white text-center p-4 sm:p-8 w-full lg:w-1/2 flex flex-col items-center justify-center md:py-16">
+            <div className="flex flex-col lg:flex-row lg:items-stretch shadow-xl rounded-xl overflow-hidden">
+              {/* Red section with logo and title */}
+              <div className="bg-primary text-white text-center p-6 sm:p-8 w-full lg:w-1/2 flex flex-col items-center justify-center md:py-16">
                 <div className="max-w-md mx-auto">
                   <img
                     src="/logo.png"
@@ -58,6 +58,7 @@ export default function LoginForm() {
                             <Input
                               {...field}
                               placeholder="प्रयोगकर्तानाम/ कर्मचारी संकेत नं"
+                              className="border-gray-300 focus:ring-primary focus:border-primary"
                             />
                           </FormControl>
                           <FormMessage />
@@ -71,7 +72,10 @@ export default function LoginForm() {
                         <FormItem>
                           <FormLabel>पिआईएस कोड</FormLabel>
                           <FormControl>
-                            <PasswordInput {...field} />
+                            <PasswordInput
+                              {...field}
+                              className="border-gray-300 focus:ring-primary focus:border-primary"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -80,7 +84,7 @@ export default function LoginForm() {
                     <Button
                       type="submit"
                       disabled={loading}
-                      className="w-full bg-primary hover:bg-[#A22556] text-white py-3 rounded-md"
+                      className="w-full bg-primary text-white py-3 rounded-md"
                     >
                       {loading ? (
                         <Loader2 className="animate-spin h-5 w-5 mr-2" />

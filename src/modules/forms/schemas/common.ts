@@ -71,7 +71,9 @@ export const CommonFormSchema = z.object({
       message: "JPG/JPEG मात्र स्वीकार्य छ।",
     }),
 
-  citizenship_no: z.string({ message: "Citizenship no. is required." }),
+  citizenship_no: z
+    .string()
+    .min(4, { message: "Citizhenship no. is required." }),
 
   citizenship_front: z
     .custom<File>(
