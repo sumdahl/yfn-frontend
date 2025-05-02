@@ -1,10 +1,8 @@
-import { BSToAD } from "react-nepali-datepicker-bs";
 import { z } from "zod";
 
-import { differenceInYears, isBefore, parseISO } from "date-fns";
+import { differenceInYears, isBefore } from "date-fns";
 
-function getAgeFromBirthdate(birthdate: string): number {
-  const birthDate = parseISO(birthdate);
+function getAgeFromBirthdate(birthDate: Date): number {
   const today = new Date();
 
   let age = differenceInYears(today, birthDate);
@@ -29,41 +27,29 @@ export const CommonFormSchema = z.object({
   name_ne: z.string().min(1, { message: "Name is required" }),
   name_en: z.string().min(1, { message: "Name is required" }),
 
-  dob: z //this logic works , but not showing message
-    .string()
-    .min(1, { message: "जन्म मिति आवश्यक छ।" })
-    .superRefine((dob, ctx) => {
-      const ad = BSToAD(dob); // Convert BS to AD
-      const age = getAgeFromBirthdate(ad);
+  dob: z.coerce.date().refine(
+    (dob) => {
+      const today = new Date();
 
-      if (age < 18) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "न्यूनतम उमेर १८ वर्ष हुनुपर्छ।",
-          path: ["dob"],
-        });
+      let age = today.getFullYear() - dob.getFullYear();
+      const m = today.getMonth() - dob.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+        age--;
       }
 
-      if (age > 40) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message:
-            "उमेर ४० वर्ष माथि को प्रतिनिधिलाई आवेदन दिन निषेध गरिएको छ।",
-          path: ["dob"],
-        });
-      }
-    }),
+      return age >= 18 && age <= 40;
+    },
+    {
+      message: "Age must be between 18 and 40 years",
+    }
+  ),
 
   phone: z
     .string()
     .length(10, { message: "Phone number must be 10 digits" })
     .regex(/^\d{10}$/, { message: "Phone number must contain only digits" }),
 
-  party_no: z
-    .string()
-    .length(10)
-    .regex(/^\d{7}$/)
-    .optional(),
+  party_no: z.string().length(7).optional(),
 
   photo: z
     .custom<File>((file) => file instanceof File, "फोटो अपलोड गर्नुहोस्।")
