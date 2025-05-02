@@ -15,8 +15,7 @@ import axios from "axios";
 
 import { useAuthStore } from "@/stores/auth-store";
 
-export const baseURL =
-  "https://da3f-2400-1a00-b060-261e-f4a-b4d9-13a1-22ca.ngrok-free.app/api";
+export const baseURL = "https://dummyjson.com";
 
 export const api = axios.create({ baseURL: baseURL + "/api" });
 

@@ -3,12 +3,14 @@ import { useForm } from "react-hook-form";
 import { useCallback, useState } from "react";
 import { api } from "@/api/axios";
 import { useAuthStore } from "@/stores/auth-store";
+import { useSessionStore } from "@/stores/sector-store";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "./schemas/login";
 
 export const useLoginForm = () => {
   const login = useAuthStore((e) => e.update);
+  const setSectorResponse = useSessionStore((s) => s.setSectorResponse);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const form = useForm<LoginSchema>({
@@ -24,13 +26,27 @@ export const useLoginForm = () => {
     async (data: LoginSchema) => {
       try {
         setLoading(true);
+
+        //Login request
         const response = await api.post("/auth/login", data);
         const res = response.data?.data;
+
         if (!res.access_token || !res?.user_details) {
           throw new Error("Invalid login response");
         }
         login(res.access_token, res.user_details);
-        navigate("/minute", { replace: true });
+
+        //Fetch /sector data
+        const sectorRes = await api.get("/sector");
+        const sectorData = sectorRes.data;
+
+        if (!sectorData?.success || !sectorData?.data) {
+          throw new Error("Failed to fetch sector data.");
+        }
+
+        setSectorResponse(sectorData);
+
+        navigate("/forms", { replace: true });
       } catch (error: any) {
         console.log("Login failed", error);
         toast.error(error.message || "Unable to login, please try again.");
@@ -38,7 +54,7 @@ export const useLoginForm = () => {
         setLoading(false);
       }
     },
-    [login, navigate]
+    [login, navigate, setSectorResponse]
   );
 
   return { ...form, loading, onSubmit: handleSubmit((e) => onSubmit(e)) };
