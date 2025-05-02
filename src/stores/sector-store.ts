@@ -12,6 +12,7 @@ interface SectorStore {
   isLoading: boolean;
   setSectorData: (sectorData: SectorData) => void;
   setLoading: (isLoading: boolean) => void;
+  updateMinuteInfo: (minuteInfo: { uploaded: boolean }) => void; // uploaded could or not be verify
   clearSectorData: () => void;
 }
 
@@ -28,6 +29,18 @@ const useSectorStore = create<SectorStore>((set) => ({
       isLoading: false,
     }),
   setLoading: (isLoading) => set({ isLoading }),
+  updateMinuteInfo: (minuteInfo) =>
+    set((state) => ({
+      sectorData: state.sectorData
+        ? {
+            ...state.sectorData,
+            minute_details: {
+              ...state.sectorData.minute_details,
+              minute_info: minuteInfo,
+            },
+          }
+        : null,
+    })),
   clearSectorData: () =>
     set({ sectorData: null, sectorMemberList: [], isLoading: false }),
 }));
