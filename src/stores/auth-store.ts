@@ -1,7 +1,7 @@
 import { User } from "@/models/user";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-
+import useSectorStore from "./sector-store";
 interface AuthStore {
   token?: string;
   user?: User;
@@ -16,6 +16,7 @@ export const useAuthStore = create<AuthStore>()(
       logout: () => {
         set({ token: undefined, user: undefined });
         localStorage.removeItem("auth-storage");
+        useSectorStore.getState().clearSectorData();
       },
     }),
     {

@@ -7,10 +7,13 @@ import "./index.css";
 import NotFound from "./modules/404/index.tsx";
 import Forms from "./modules/forms/index.tsx";
 import LoginForm from "./modules/login/index.tsx";
+
 // import { MinuteUpload } from "./modules/forms/components/minute-upload.tsx";
 import { ProtectedRoute } from "./main/protected-routes.tsx";
 import Dashboard from "./modules/dashboard/index.tsx";
 import { MinuteUpload } from "./modules/forms/components/minute-upload.tsx";
+import FormUploadSuccess from "./modules/forms/components/form-sucess.tsx";
+import Test from "./modules/forms/components/test-zustand.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -27,11 +30,27 @@ createRoot(document.getElementById("root")!).render(
           }
         />
         <Route
+          path="/test"
+          element={
+            <ProtectedRoute>
+              <Test />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/minute"
           element={
             // <ProtectedRoute>
             <MinuteUpload />
             // </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/form-sucess"
+          element={
+            <ProtectedRoute>
+              <FormUploadSuccess />
+            </ProtectedRoute>
           }
         />
         <Route

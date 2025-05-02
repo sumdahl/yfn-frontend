@@ -28,19 +28,9 @@ import { useCommonForm } from "./use-common-form";
 import NepaliDatePicker from "@zener/nepali-datepicker-react";
 import "@zener/nepali-datepicker-react/index.css";
 
-import { useSessionStore } from "@/stores/sector-store";
 import { MinuteUpload } from "./components/minute-upload";
 
 export default function Forms() {
-  const minuteDetails = useSessionStore(
-    (s) => s.sectorResponse?.minute_details
-  );
-  const sectorDetails = useSessionStore(
-    (s) => s.sectorResponse?.sector_list[0].sector_details
-  );
-
-  const allowed = minuteDetails?.is_minute_allowed ?? false;
-
   const { onSubmit, loading, ...form } = useCommonForm(); //send userId here
 
   const [passportPreview, setPassportPreview] = useState<string | null>(null);

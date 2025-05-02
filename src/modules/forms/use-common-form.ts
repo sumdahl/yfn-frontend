@@ -4,13 +4,10 @@ import { CommonFormSchema } from "./schemas/common";
 import { useCallback, useState } from "react";
 import { api } from "@/api/axios";
 
-import { useSessionStore } from "@/stores/sector-store";
+// import { useSessionStore } from "@/stores/sector-store";
+import { toast } from "sonner";
 
 export const useCommonForm = () => {
-  const sectorMemberList = useSessionStore(
-    (s) => s.sectorResponse?.sector_list[1].sector_member_list[0]
-  );
-
   const [loading, setLoading] = useState<boolean>(false);
 
   // const userId = sectorMemberList?.id;
@@ -73,6 +70,8 @@ export const useCommonForm = () => {
 
         const result = await response.data;
         console.log("Patch success:", result);
+
+        toast.success(result.message); //or render new page
       } catch (error) {
         console.error("Patch error:", error);
       } finally {
@@ -81,13 +80,6 @@ export const useCommonForm = () => {
     },
     [userId]
   );
-  // return {
-  //   ...form,
-  //   loading: false,
-  //   onSubmit: form.handleSubmit((e) => console.log(e), console.error),
-  // };
 
   return { ...form, loading, onSubmit: form.handleSubmit((e) => onSubmit(e)) };
 };
-
-// return { ...form, loading, onSubmit: handleSubmit((e) => onSubmit(e)) };
