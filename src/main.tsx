@@ -10,6 +10,7 @@ import LoginForm from "./modules/login/index.tsx";
 // import { MinuteUpload } from "./modules/forms/components/minute-upload.tsx";
 import { ProtectedRoute } from "./main/protected-routes.tsx";
 import Dashboard from "./modules/dashboard/index.tsx";
+import { MinuteUpload } from "./modules/forms/components/minute-upload.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -23,6 +24,14 @@ createRoot(document.getElementById("root")!).render(
             <ProtectedRoute>
               <Forms />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/minute"
+          element={
+            // <ProtectedRoute>
+            <MinuteUpload />
+            // </ProtectedRoute>
           }
         />
         <Route

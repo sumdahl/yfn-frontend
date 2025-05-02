@@ -7,78 +7,86 @@ import { api } from "@/api/axios";
 import { toast } from "sonner";
 import { useIsAuthenticated } from "@/stores/auth-store";
 import { useSessionStore } from "@/stores/sector-store";
-
+import { FileUp } from "lucide-react";
 export const MinuteUpload = () => {
-  const isAuthenticated = useIsAuthenticated();
+  // const isAuthenticated = useIsAuthenticated();
 
-  const minuteDetails = useSessionStore(
-    (s) => s.sectorResponse?.minute_details
-  );
+  // const minuteDetails = useSessionStore(
+  //   (s) => s.sectorResponse?.minute_details
+  // );
 
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploaded, setUploaded] = useState(false);
+  // const [isUploading, setIsUploading] = useState(false);
+  // const [uploaded, setUploaded] = useState(false);
 
-  const { files, open, reset } = useFileDialog({
-    accept: ".pdf",
-    multiple: false,
-    resetOnOpen: true,
-  });
+  // const { files, open, reset } = useFileDialog({
+  //   accept: ".pdf",
+  //   multiple: false,
+  //   resetOnOpen: true,
+  // });
 
-  const file = files?.[0];
+  // const file = files?.[0];
 
-  useEffect(() => {
-    return () => reset();
-  }, [reset]);
+  // useEffect(() => {
+  //   return () => reset();
+  // }, [reset]);
 
-  // Defensive checks
-  const allowed = minuteDetails?.is_minute_allowed ?? false;
-  const alreadyUploaded = !!minuteDetails?.minute_info;
+  // // Defensive checks
+  // const allowed = minuteDetails?.is_minute_allowed ?? false;
+  // const alreadyUploaded = !!minuteDetails?.minute_info;
 
-  if (!isAuthenticated || !allowed) return null;
+  // if (!isAuthenticated || !allowed) return null;
 
-  // Handle file upload
-  const handleSubmit = async () => {
-    if (!file) return;
-    setIsUploading(true);
+  // // Handle file upload
+  // const handleSubmit = async () => {
+  //   if (!file) return;
+  //   setIsUploading(true);
 
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("file", file);
 
-      const response = await api.post("/minute", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+  //     const response = await api.post("/minute", formData, {
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     });
 
-      toast.success(response.data?.message || "Minute uploaded successfully");
+  //     toast.success(response.data?.message || "Minute uploaded successfully");
 
-      // Update Zustand state (you can directly use the stored set function)
-      const updateMinuteInfo = useSessionStore.getState().setSectorResponse;
-      const prev = useSessionStore.getState().sectorResponse;
+  //     // Update Zustand state (you can directly use the stored set function)
+  //     const updateMinuteInfo = useSessionStore.getState().setSectorResponse;
+  //     const prev = useSessionStore.getState().sectorResponse;
 
-      if (prev) {
-        updateMinuteInfo({
-          ...prev,
-          minute_details: {
-            ...prev.minute_details,
-            minute_info: { uploaded: true }, //or minute_info : true
-          },
-        });
-      }
+  //     if (prev) {
+  //       updateMinuteInfo({
+  //         ...prev,
+  //         minute_details: {
+  //           ...prev.minute_details,
+  //           minute_info: { uploaded: true }, //or minute_info : true
+  //         },
+  //       });
+  //     }
 
-      // Optionally, set local state to reflect the uploaded status
-      setUploaded(true);
-    } catch (error) {
-      console.error("Upload failed:", error);
-      toast.error("Error uploading PDF.");
-    } finally {
-      setIsUploading(false);
-    }
-  };
+  //     // Optionally, set local state to reflect the uploaded status
+  //     setUploaded(true);
+  //   } catch (error) {
+  //     console.error("Upload failed:", error);
+  //     toast.error("Error uploading PDF.");
+  //   } finally {
+  //     setIsUploading(false);
+  //   }
+  // };
+
+  const file = true;
+  const alreadyUploaded = true;
+  const uploaded = true;
 
   return (
-    <Card className="shadow-lg p-6">
-      <CardHeader>
-        <CardTitle>Upload Minute</CardTitle>
+    <Card className="shadow-lg p-6 m-2">
+      <CardHeader className="flex gap-2 items-center">
+        <FileUp
+          className="animate-pulse scale-175
+        "
+        />
+        <CardTitle className="">Minute Upload गर्नुहोस्</CardTitle>
       </CardHeader>
       <CardContent className="my-0 relative">
         {alreadyUploaded || uploaded ? (
@@ -90,6 +98,12 @@ export const MinuteUpload = () => {
             <p className="text-muted-foreground text-base">
               कृपया अब फारम भर्नुहोस्
             </p>
+            {file && (
+              <div className="text-sm text-muted-foreground flex items-center gap-2 mt-2">
+                <File className="w-4 h-4 text-green-600" />
+                <span>{file.name}</span>
+              </div>
+            )}
           </div>
         ) : (
           <div className="flex flex-col gap-6">

@@ -11,7 +11,7 @@ import { useLoginForm } from "./use-login-form";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Card } from "@/components/ui/card";
-import { Loader2 } from "lucide-react";
+import { Loader2, User, Lock } from "lucide-react";
 
 export default function LoginForm() {
   const { onSubmit, loading, ...form } = useLoginForm();
@@ -25,22 +25,24 @@ export default function LoginForm() {
               <div className="bg-primary text-white text-center p-6 sm:p-8 w-full lg:w-1/2 flex flex-col items-center justify-center md:py-16">
                 <div className="max-w-md mx-auto">
                   <img
-                    src="/yfn-logo.jpg"
+                    src="/yfn-wbg.png"
                     alt="National Youth Federation Nepal"
                     width={120}
                     height={120}
-                    className="mx-auto mb-4 rounded-lg bg-gray-200 w-80 h-80"
+                    className="mx-auto mb-4"
                   />
 
-                  <h1 className="text-2xl font-medium mb-2">नेपाल सरकार</h1>
-                  <div className="border-t border-gray-300/30 max-w-full my-6" />
+                  <h1 className="text-2xl font-medium mb-2">
+                    राष्ट्रिय युवा संघ नेपाल{" "}
+                  </h1>
+                  <div className="border-t border-white max-w-full my-6" />
                   <h2 className="text-xl font-bold mb-2">
-                    एकिकृत हाजिरी व्यवस्थापन प्रणाली
+                    १०औं राष्ट्रिय महाधिवेसन{" "}
                   </h2>
-                  <p className="text-xl">मा तपाईलाई स्वागत छ</p>
+                  <p className="text opacity-90">मा तपाईलाई स्वागत छ</p>
 
                   <div className="hidden lg:block mt-auto pt-16">
-                    <p className="text-sm">© सूचना प्रविधि विभाग</p>
+                    <p className="text-sm opacity80-">© युवा संघ नेपाल </p>
                   </div>
                 </div>
               </div>
@@ -54,11 +56,17 @@ export default function LoginForm() {
                       name="username"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>पिआईएस कोड</FormLabel>
+                          <FormLabel>
+                            <div className="flex items-center gap-3">
+                              <User className="w-4 h-4" />
+                              प्रयोगकर्तानाम
+                            </div>
+                          </FormLabel>
+
                           <FormControl>
                             <Input
                               {...field}
-                              placeholder="प्रयोगकर्तानाम/ कर्मचारी संकेत नं"
+                              placeholder="name@yfn.com"
                               className="border-gray-300 focus:ring-primary focus:border-primary"
                             />
                           </FormControl>
@@ -71,7 +79,11 @@ export default function LoginForm() {
                       name="password"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>पिआईएस कोड</FormLabel>
+                          <FormLabel>
+                            <div className="flex items-center gap-3">
+                              <Lock className="w-4 h-4" /> पासवर्ड
+                            </div>
+                          </FormLabel>
                           <FormControl>
                             <PasswordInput
                               {...field}

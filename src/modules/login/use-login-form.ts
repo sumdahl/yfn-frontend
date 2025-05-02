@@ -7,6 +7,7 @@ import { useSessionStore } from "@/stores/sector-store";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "./schemas/login";
+import { AxiosError } from "axios";
 
 export const useLoginForm = () => {
   const login = useAuthStore((e) => e.update);
@@ -36,33 +37,33 @@ export const useLoginForm = () => {
         }
         login(res.access_token, res.user_details);
 
-        // //Fetch /sector data
-        // const sectorRes = await api.get("/sector");
-        // const sectorRes = await fetch(
-        //   ""
-        // );
-        // const sectorData = sectorRes.json();
-        // console.log(sectorData);
         const sectorRes = await api.get("/sector");
         const sectorData = sectorRes.data;
 
         console.log(sectorData);
 
-        // if (!sectorData?.success || !sectorData?.data) {
-        //   throw new Error("Failed to fetch sector data.");
-        // }
+        if (!sectorData?.success || !sectorData?.data) {
+          throw new Error("Failed to fetch sector data.");
+        }
 
-        // setSectorResponse(sectorData);    //setSectorResponse
+        setSectorResponse(sectorData); //setSectorResponse
 
         navigate("/forms", { replace: true });
-      } catch (error: any) {
-        console.log("Login failed", error);
-        toast.error(error.message || "Unable to login, please try again.");
+      } catch (error: unknown) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response?.status === 400) {
+          const message =
+            (axiosError.response.data as { message?: string })?.message ||
+            "Invalid username or password";
+          toast.error(message);
+        } else {
+          toast.error("500 server error");
+        }
       } finally {
         setLoading(false);
       }
     },
-    [login, navigate]
+    [login, navigate, setSectorResponse]
   );
 
   return { ...form, loading, onSubmit: handleSubmit((e) => onSubmit(e)) };
