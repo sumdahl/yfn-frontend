@@ -5,10 +5,12 @@ import { useCallback, useState } from "react";
 import { api } from "@/api/axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+// import useSectorStore from "@/stores/sector-store";
 
 export const useCommonForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
+  // const userId = useSectorStore((s) => s.sectorMemberList[1].id)
   const navigate = useNavigate();
   // const userId = sectorMemberList?.id;
   const userId = 1942;
@@ -71,12 +73,12 @@ export const useCommonForm = () => {
           },
         });
 
-        const result = await response.data;
+        const result = await response.data; //data ma user ko details pathauxa save garera arko redirected page ma dekhaidinxu
         console.log("Patch success:", result);
 
         toast.success(result.message);
 
-        navigate("/form-success", { replace: true });
+        navigate("/sucess", { replace: true }); //show message
         //or render new page
       } catch (error) {
         console.error("Patch error:", error);

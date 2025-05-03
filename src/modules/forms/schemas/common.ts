@@ -52,7 +52,7 @@ export const CommonFormSchema = z.object({
   phone: z.string().length(10, { message: "नम्बर मात्रै १० अंक" }),
   // .regex(/^\d{10}$/, { message: "Phone number must contain only digits" }),
 
-  party_no: z.string().length(7, { message: " " }).or(z.literal("")),
+  party_no: z.string().max(15, { message: " " }).or(z.literal("")),
 
   photo: z
     .custom<File>((file) => file instanceof File, "फोटो अपलोड गर्नुहोस्।")

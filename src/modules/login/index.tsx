@@ -12,43 +12,41 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Card } from "@/components/ui/card";
 import { Loader2, User, Lock } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function LoginForm() {
   const { onSubmit, loading, ...form } = useLoginForm();
   return (
     <div>
       <Card className="bg-muted flex justify-center items-center min-h-screen">
-        <div className="flex flex-col items-center justify-center mx-auto w-11/12 sm:w-4/5 md:min-w-4xl max-w-6xl">
-          <div className="w-full">
-            <div className="flex flex-col lg:flex-row lg:items-stretch shadow-xl rounded-xl overflow-hidden">
-              {/* Red section with logo and title */}
-              <div className="bg-primary text-white text-center p-6 sm:p-8 w-full lg:w-1/2 flex flex-col items-center justify-center md:py-16">
+        <div className="flex flex-col items-center justify-center mx-auto w-11/12 sm:w-4/5 md:min-w-4xl max-w-6xl h-full">
+          <div className="w-full h-full">
+            <div className="flex flex-col lg:flex-row lg:items-stretch shadow-xl rounded-xl overflow-hidden h-full">
+              {/* Green section with logo and title */}
+              <div className="bg-primary text-white text-center p-6 sm:p-8 w-full h-1/2 lg:h-auto lg:w-1/2 flex flex-col items-center justify-center md:py-16">
                 <div className="max-w-md mx-auto">
                   <img
-                    src="/yfn-wbg.png"
+                    src="/yfn.png"
                     alt="National Youth Federation Nepal"
-                    width={140}
-                    height={140}
-                    className="mx-auto mb-4"
+                    className="mx-auto mb-4 w-40 sm:w-60 md:w-72 lg:w-[540px]"
                   />
-
                   <h1 className="text-2xl font-medium mb-2">
-                    राष्ट्रिय युवा संघ नेपाल{" "}
+                    राष्ट्रिय युवा संघ नेपाल
                   </h1>
                   <div className="border-t border-white max-w-full my-6" />
                   <h2 className="text-xl font-bold mb-2">
-                    १०औं राष्ट्रिय महाधिवेसन{" "}
+                    १०औं राष्ट्रिय महाधिवेसन
                   </h2>
                   <p className="text opacity-90">मा तपाईलाई स्वागत छ</p>
 
                   <div className="hidden lg:block mt-auto pt-16">
-                    <p className="text-sm opacity80-">© युवा संघ नेपाल </p>
+                    <p className="text-sm opacity-80">© युवा संघ नेपाल</p>
                   </div>
                 </div>
               </div>
 
               {/* White section with form */}
-              <div className="bg-white p-8 w-full lg:w-1/2 flex items-center justify-center">
+              <div className="bg-white p-8 w-full h-1/2 lg:h-auto lg:w-1/2 flex items-center justify-center">
                 <Form {...form}>
                   <form onSubmit={onSubmit} className="w-full space-y-8">
                     <FormField
@@ -67,7 +65,12 @@ export default function LoginForm() {
                             <Input
                               {...field}
                               placeholder="name@yfn.com"
-                              className="border-gray-300 focus:ring-primary focus:border-primary"
+                              disabled={loading}
+                              className={cn(
+                                loading
+                                  ? "cursor-not-allowed"
+                                  : "border-gray-300 focus:ring-primary focus:border-primary"
+                              )}
                             />
                           </FormControl>
                           <FormMessage />

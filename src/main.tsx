@@ -29,7 +29,7 @@ createRoot(document.getElementById("root")!).render(
       </Route>
 
       <Route
-        path="/form-sucess"
+        path="/success"
         element={
           <ProtectedRoute>
             <FormUploadSuccess />
