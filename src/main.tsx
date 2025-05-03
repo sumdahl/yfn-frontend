@@ -11,6 +11,7 @@ import { ProtectedRoute } from "./routes/protected-routes.tsx";
 import Dashboard from "./modules/dashboard/index.tsx";
 import FormUploadSuccess from "./modules/forms/components/form-sucess.tsx";
 import FormLayout from "./modules/forms/layout.tsx";
+import { MinuteUpload } from "./modules/forms/components/minute-upload.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -35,6 +36,14 @@ createRoot(document.getElementById("root")!).render(
           <ProtectedRoute>
             <FormUploadSuccess />
           </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/minute"
+        element={
+          // <ProtectedRoute>
+          <MinuteUpload />
+          // </ProtectedRoute>
         }
       />
       <Route

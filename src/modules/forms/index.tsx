@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { useCommonForm } from "./use-common-form";
-
+import { LOGO_FLAG } from "@/constants/logo";
 import NepaliDatePicker from "@zener/nepali-datepicker-react";
 import "@zener/nepali-datepicker-react/index.css";
 
@@ -78,22 +78,12 @@ export default function Forms() {
           <Card className="shadow-lg p-6">
             <Form {...form}>
               <form onSubmit={onSubmit}>
-                <div className="space-y-6">
-                  <div>
-                    <span className="mr-2 text-red-500">*</span>
-                    <span className="text-gray-600/80 text-sm">
-                      [Required ]
+                <div className="space-y-1">
+                  <div className="flex justify-between">
+                    <span className="mr-2 text-xs md:text-sm  text-red-500">
+                      * <span className="text-gray-500/80">[Required]</span>
                     </span>
-                  </div>
-
-                  <div className="flex flex-col space-y-2 justify-center items-center py-4 rounded-lg">
-                    <h1 className=" text-2xl md:text-4xl text-primary font-semibold">
-                      राष्ट्रिय युवा संघ नेपाल
-                    </h1>{" "}
-                    <h2 className="text-secondary text-lg md:text-2xl">
-                      {level || "केन्द्रीय कमिटी"}
-                    </h2>
-                    <div className="self-start text-sm ml-2 flex opacity-80 flex-col space-y-1">
+                    <div className="self-start text-xs md:text-sm ml-2 flex opacity-80 flex-col space-y-1">
                       <span className="text-red-500">
                         नोट : फारम भर्दा यी कुराहरु ध्यान दिनु होला{" "}
                       </span>
@@ -106,6 +96,20 @@ export default function Forms() {
                         </p>
                       </div>
                     </div>
+                  </div>
+
+                  <div className="flex flex-col space-y-2 justify-center items-center py-4 rounded-lg">
+                    <img
+                      src={LOGO_FLAG}
+                      className="w-20 h-20 object-cover rounded-lg"
+                      alt="logo-flag"
+                    />
+                    <h1 className=" text-2xl md:text-4xl text-primary font-semibold">
+                      राष्ट्रिय युवा संघ नेपाल
+                    </h1>{" "}
+                    <h2 className="md:text-xl text-primary/90">
+                      १० औं राष्ट्रिय महाधिवेशन फारम
+                    </h2>{" "}
                   </div>
 
                   {/* Profile Picture Section */}
@@ -167,7 +171,8 @@ export default function Forms() {
                     />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-                    {/* Name Field */}
+                    {/*Nepali name field */}
+
                     <FormField
                       control={form.control}
                       name="name"

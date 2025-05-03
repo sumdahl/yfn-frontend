@@ -13,6 +13,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { Card } from "@/components/ui/card";
 import { Loader2, User, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { LOGO } from "@/constants/logo";
 
 export default function LoginForm() {
   const { onSubmit, loading, ...form } = useLoginForm();
@@ -30,7 +31,7 @@ export default function LoginForm() {
                 <div className="max-w-md mx-auto">
                   {/*logo */}
                   <img
-                    src="/yfn.png"
+                    src={LOGO}
                     alt="National Youth Federation Nepal"
                     className="mx-auto mb-4 w-40 sm:w-60 md:w-72 lg:w-[540px]"
                   />
