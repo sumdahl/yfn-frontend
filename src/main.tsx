@@ -38,14 +38,14 @@ createRoot(document.getElementById("root")!).render(
           </ProtectedRoute>
         }
       />
-      <Route
+      {/* <Route
         path="/minute"
         element={
-          // <ProtectedRoute>
+          <ProtectedRoute>
           <MinuteUpload />
-          // </ProtectedRoute>
+          </ProtectedRoute>
         }
-      />
+      /> */}
       <Route
         path="/dashboard"
         element={
