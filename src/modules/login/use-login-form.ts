@@ -10,7 +10,7 @@ import { AxiosError } from "axios";
 import { User } from "@/models/user";
 
 export const useLoginForm = () => {
-  const { update } = useAuthStore();
+  const update = useAuthStore((e) => e.update);
 
   const [loading, setFormLoading] = useState(false);
   const navigate = useNavigate();

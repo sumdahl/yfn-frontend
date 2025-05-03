@@ -12,12 +12,11 @@ import { FileUp } from "lucide-react";
 export const MinuteUpload = () => {
   const isAuthenticated = useIsAuthenticated();
 
-  const { sectorData, updateMinuteInfo } = useSectorStore();
-  console.log(
-    "Minute allowed minute upload component: ",
-    sectorData?.minute_details.is_minute_allowed
-  );
+  const sectorData = useSectorStore((s) => s.sectorData);
+  const updateMinuteInfo = useSectorStore((s) => s.updateMinuteInfo);
+
   const minuteDetails = sectorData?.minute_details;
+  console.log("Minute Details: ", minuteDetails);
 
   const [isUploading, setIsUploading] = useState(false);
   const [uploaded, setUploaded] = useState(false);
@@ -29,17 +28,19 @@ export const MinuteUpload = () => {
   });
 
   const file = files?.[0];
+  console.log("Files:", file);
 
   useEffect(() => {
     return () => reset();
   }, [reset]);
 
-  // Defensive checks
-  const allowed = minuteDetails?.is_minute_allowed ?? false; //test success.
-  // const allowed = true;
-  // console.log(allowed);
+  const allowed = minuteDetails?.is_minute_allowed ?? false;
 
   const alreadyUploaded = !!minuteDetails?.minute_info;
+
+  if (alreadyUploaded) {
+    toast.info("You have already uploaded minute PDF.");
+  }
   console.log("Already uploaded: ", alreadyUploaded); //should display minute_info
 
   if (!isAuthenticated || !allowed) return null;
@@ -53,13 +54,14 @@ export const MinuteUpload = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await api.post("/minute", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const response = await api.post("/minute", formData);
+
+      console.log("API response:", response.data);
 
       toast.success(response.data?.message || "Minute uploaded successfully");
 
-      const minuteInfo = response.data.data?.minute_details.minute_info;
+      const minuteInfo = response.data.data?.minute_details.minute_info; //code fine but initially need to refresh
+      console.log("Minute info :", minuteInfo);
       updateMinuteInfo(minuteInfo);
 
       // Optionally, set local state to reflect the uploaded status
@@ -88,9 +90,9 @@ export const MinuteUpload = () => {
             <h2 className="text-green-700 text-3xl font-semibold">
               Minute successfully अप्लोड भयो
             </h2>
-            <p className="text-muted-foreground text-base">
+            <h3 className="text-muted-foreground text-2xl">
               कृपया अब फारम भर्नुहोस्
-            </p>
+            </h3>
             {file && (
               <div className="text-sm text-muted-foreground flex items-center gap-2 mt-2">
                 <File className="w-4 h-4 text-green-600" />
@@ -101,6 +103,7 @@ export const MinuteUpload = () => {
         ) : (
           <div className="flex flex-col gap-6">
             <div
+              aria-disabled={isUploading}
               className="hover:bg-accent/50 cursor-pointer rounded-lg border-2 border-dashed p-12 text-center transition-colors"
               onClick={open}
             >
@@ -115,6 +118,7 @@ export const MinuteUpload = () => {
                   e.stopPropagation();
                   open();
                 }}
+                disabled={isUploading}
               >
                 <Upload className="h-4 w-4" />
                 Select File

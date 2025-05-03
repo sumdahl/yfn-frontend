@@ -12,7 +12,7 @@ interface SectorStore {
   isLoading: boolean;
   setSectorData: (sectorData: SectorData) => void;
   setLoading: (isLoading: boolean) => void;
-  updateMinuteInfo: (minuteInfor: unknown) => void;
+  updateMinuteInfo: (minuteInfo: unknown) => void;
   clearSectorData: () => void;
 }
 
@@ -41,6 +41,7 @@ const useSectorStore = create<SectorStore>((set) => ({
           }
         : null,
     })),
+
   clearSectorData: () =>
     set({ sectorData: null, sectorMemberList: [], isLoading: false }),
 }));

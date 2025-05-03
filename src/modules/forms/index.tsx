@@ -34,8 +34,13 @@ import { MinuteUpload } from "./components/minute-upload";
 export default function Forms() {
   const { onSubmit, loading, ...form } = useCommonForm(); //send userId here
 
-  const { sectorData } = useSectorStore();
+  const sectorData = useSectorStore((s) => s.sectorData);
+
   const minuteAllowed = sectorData?.minute_details?.is_minute_allowed ?? false;
+
+  const minuteInfo = sectorData?.minute_details.minute_info;
+
+  const shouldShowMinuteUpload = minuteAllowed && !minuteInfo;
 
   console.log("Minute Allowed: FORM component", minuteAllowed);
 
@@ -66,7 +71,7 @@ export default function Forms() {
 
   return (
     <div>
-      {minuteAllowed ? (
+      {shouldShowMinuteUpload ? (
         <MinuteUpload />
       ) : (
         <div className="flex h-full flex-col gap-4 md:overflow-hidden p-8 lg:max-w-4/5 xl:max-w-3/5 mx-auto">
@@ -131,6 +136,7 @@ export default function Forms() {
                                   handleImagePreview(file, setPassportPreview);
                                 }
                               }}
+                              disabled={loading}
                             />
                           </div>
                           <FormLabel className="mt-2 text-center">
@@ -167,6 +173,7 @@ export default function Forms() {
                                 placeholder=" पूरा नाम नेपालीमा "
                                 className="pl-10"
                                 {...field}
+                                disabled={loading}
                               />
                             </div>
                           </FormControl>
@@ -193,6 +200,7 @@ export default function Forms() {
                                 placeholder=" Full Name in English "
                                 className="pl-10"
                                 {...field}
+                                disabled={loading}
                               />
                             </div>
                           </FormControl>
@@ -230,6 +238,7 @@ export default function Forms() {
                                   "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
                                   "pl-10"
                                 )}
+                                disabled={loading}
                               />
                             </div>
                           </FormControl>
@@ -268,6 +277,7 @@ export default function Forms() {
                                   );
                                   field.onChange(digitsOnly); // Only allow digits
                                 }}
+                                disabled={loading}
                               />
                             </div>
                           </FormControl>
@@ -292,6 +302,7 @@ export default function Forms() {
                                 placeholder="पार्टी सदस्यता नं. (वैकल्पिक)" //optional
                                 className="pl-10"
                                 {...field}
+                                disabled={loading}
                               />
                             </div>
                           </FormControl>
@@ -317,6 +328,7 @@ export default function Forms() {
                                 placeholder="नागरिकता  नं."
                                 className="pl-10"
                                 {...field}
+                                disabled={loading}
                               />
                             </div>
                           </FormControl>
@@ -358,6 +370,7 @@ export default function Forms() {
                                       handleImagePreview(file, setFrontPreview);
                                     }
                                   }}
+                                  disabled={loading}
                                 />
                               </div>
                               {frontPreview && (
@@ -408,6 +421,7 @@ export default function Forms() {
                                       handleImagePreview(file, setBackPreview);
                                     }
                                   }}
+                                  disabled={loading}
                                 />
                               </div>
                               {backPreview && (

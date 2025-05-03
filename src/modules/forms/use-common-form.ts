@@ -3,13 +3,13 @@ import { useForm } from "react-hook-form";
 import { CommonFormSchema } from "./schemas/common";
 import { useCallback, useState } from "react";
 import { api } from "@/api/axios";
-
-// import { useSessionStore } from "@/stores/sector-store";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export const useCommonForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
+  const navigate = useNavigate();
   // const userId = sectorMemberList?.id;
   const userId = 1942;
 
@@ -51,8 +51,11 @@ export const useCommonForm = () => {
         );
 
         formData.append("phone", data.phone);
-        formData.append("party_no", data.party_no);
         formData.append("citizenship_no", data.citizenship_no);
+
+        if (data.party_no.trim() !== "") {
+          formData.append("party_no", data.party_no);
+        }
 
         if (data.photo) formData.append("photo", data.photo);
         if (data.citizenship_front)
@@ -71,14 +74,17 @@ export const useCommonForm = () => {
         const result = await response.data;
         console.log("Patch success:", result);
 
-        toast.success(result.message); //or render new page
+        toast.success(result.message);
+
+        navigate("/form-success", { replace: true });
+        //or render new page
       } catch (error) {
         console.error("Patch error:", error);
       } finally {
         setLoading(false);
       }
     },
-    [userId]
+    [userId, navigate]
   );
 
   return { ...form, loading, onSubmit: form.handleSubmit((e) => onSubmit(e)) };

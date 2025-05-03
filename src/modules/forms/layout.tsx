@@ -1,6 +1,5 @@
 import { api } from "@/api/axios";
 import { SectorApiResponse } from "@/constants/api-sector";
-import { wait } from "@/lib/utils";
 import useSectorStore from "@/stores/sector-store";
 import { Loader2 } from "lucide-react";
 import { useCallback, useEffect } from "react";
