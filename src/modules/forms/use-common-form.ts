@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CommonFormSchema } from "./schemas/common";
+import { CommonFormSchema } from "./schemas/common-form-schema";
 import { useCallback, useState } from "react";
 import { api } from "@/api/axios";
 import { useNavigate } from "react-router-dom";
@@ -78,7 +78,7 @@ export const useCommonForm = () => {
 
         toast.success(result.message);
 
-        navigate("/sucess", { replace: true }); //show message
+        navigate("/success", { replace: true }); //show message
         //or render new page
       } catch (error) {
         console.error("Patch error:", error);

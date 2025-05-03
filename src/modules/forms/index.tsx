@@ -81,19 +81,30 @@ export default function Forms() {
                 <div className="space-y-6">
                   <div>
                     <span className="mr-2 text-red-500">*</span>
-                    <span className="text-gray-500 text-sm">
-                      [Mark गरेको छेत्रहरु अनिवार्य भर्नुहोला ]
-                    </span>
+                    <span className="text-gray-500 text-sm">[Required ]</span>
                   </div>
-                  <div className="flex flex-col space-y-2 justify-center items-center">
-                    <h1 className="font-semibold text-4xl text-primary">
+                  <div className="flex flex-col space-y-2 justify-center items-center bg-primary/10 py-4 rounded-lg">
+                    <h1 className=" text-2xl md:text-4xl text-primary">
                       राष्ट्रिय युवा संघ नेपाल
                     </h1>{" "}
-                    <h2 className="text-primary">
+                    <h2 className="text-secondary text-lg md:text-2xl">
                       {level || "केन्द्रीय कमिटी"}
                     </h2>
-                    {/*import header component and replace with backend data  */}
+                    <div className="self-start text-sm ml-2 flex opacity-80 flex-col space-y-1">
+                      <span className="text-red-500">
+                        नोट : फारम भर्दा यी कुराहरु ध्यान दिनु होला{" "}
+                      </span>
+                      <div className="text-gray-700 md:text-sm text-xs">
+                        <p>१. सबै विवरण नागरिकता अनुसार भर्नुहोला </p>
+                        <p>
+                          २.
+                          <span className="ml-1 text-red-500">* </span>
+                          [Required] विवरण अनिवार्य भर्नुहोला
+                        </p>
+                      </div>
+                    </div>
                   </div>
+
                   {/* Profile Picture Section */}
                   <div className="flex flex-col items-center mb-6">
                     <FormField
@@ -445,11 +456,15 @@ export default function Forms() {
                     />
                   </div>
 
-                  <Button className="w-full" type="submit" disabled={loading}>
+                  <Button
+                    className="w-full hover:bg-secondary"
+                    type="submit"
+                    disabled={loading}
+                  >
                     {loading ? (
                       <Loader2 className="animate-spin h-5 w-5 mr-2" />
                     ) : (
-                      "Submit Registration"
+                      "फारम बुझाउनुहोस्  "
                     )}
                   </Button>
                 </div>

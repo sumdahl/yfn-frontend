@@ -7,7 +7,7 @@ import NotFound from "./modules/404/index.tsx";
 import Forms from "./modules/forms/index.tsx";
 import LoginForm from "./modules/login/index.tsx";
 
-import { ProtectedRoute } from "./main/protected-routes.tsx";
+import { ProtectedRoute } from "./routes/protected-routes.tsx";
 import Dashboard from "./modules/dashboard/index.tsx";
 import FormUploadSuccess from "./modules/forms/components/form-sucess.tsx";
 import FormLayout from "./modules/forms/layout.tsx";
@@ -17,6 +17,7 @@ createRoot(document.getElementById("root")!).render(
     <Routes>
       <Route index element={<LoginForm />} />
       <Route path="/login" element={<LoginForm />} />
+
       <Route
         path="/forms"
         element={
@@ -44,8 +45,10 @@ createRoot(document.getElementById("root")!).render(
           </ProtectedRoute>
         }
       />
+
       <Route path="*" element={<NotFound />} />
     </Routes>
+
     <Toaster />
   </BrowserRouter>
 );

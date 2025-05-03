@@ -22,9 +22,13 @@ export default function LoginForm() {
         <div className="flex flex-col items-center justify-center mx-auto w-11/12 sm:w-4/5 md:min-w-4xl max-w-6xl h-full">
           <div className="w-full h-full">
             <div className="flex flex-col lg:flex-row lg:items-stretch shadow-xl rounded-xl overflow-hidden h-full">
-              {/* Green section with logo and title */}
-              <div className="bg-primary text-white text-center p-6 sm:p-8 w-full h-1/2 lg:h-auto lg:w-1/2 flex flex-col items-center justify-center md:py-16">
+              {/* Blue section with logo and title */}
+              <div
+                className="bg-primary text-white text-center p-6 sm:p-8 w-full h-1/2 
+                lg:h-auto lg:w-1/2 flex flex-col items-center justify-center  md:py-16"
+              >
                 <div className="max-w-md mx-auto">
+                  {/*logo */}
                   <img
                     src="/yfn.png"
                     alt="National Youth Federation Nepal"
@@ -33,6 +37,7 @@ export default function LoginForm() {
                   <h1 className="text-2xl md:text-3xl font-medium mb-2">
                     राष्ट्रिय युवा संघ नेपाल
                   </h1>
+                  {/*divider */}
                   <div className="border-t border-white max-w-full my-6" />
                   <h2 className="text-xl font-bold mb-2">
                     १०औं राष्ट्रिय महाधिवेशन
