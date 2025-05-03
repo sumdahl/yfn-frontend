@@ -81,10 +81,13 @@ export default function Forms() {
                 <div className="space-y-6">
                   <div>
                     <span className="mr-2 text-red-500">*</span>
-                    <span className="text-gray-500 text-sm">[Required ]</span>
+                    <span className="text-gray-600/80 text-sm">
+                      [Required ]
+                    </span>
                   </div>
-                  <div className="flex flex-col space-y-2 justify-center items-center bg-primary/10 py-4 rounded-lg">
-                    <h1 className=" text-2xl md:text-4xl text-primary">
+
+                  <div className="flex flex-col space-y-2 justify-center items-center py-4 rounded-lg">
+                    <h1 className=" text-2xl md:text-4xl text-primary font-semibold">
                       राष्ट्रिय युवा संघ नेपाल
                     </h1>{" "}
                     <h2 className="text-secondary text-lg md:text-2xl">
@@ -94,7 +97,7 @@ export default function Forms() {
                       <span className="text-red-500">
                         नोट : फारम भर्दा यी कुराहरु ध्यान दिनु होला{" "}
                       </span>
-                      <div className="text-gray-700 md:text-sm text-xs">
+                      <div className="text-gray-600 md:text-sm text-xs">
                         <p>१. सबै विवरण नागरिकता अनुसार भर्नुहोला </p>
                         <p>
                           २.
@@ -163,7 +166,6 @@ export default function Forms() {
                       )}
                     />
                   </div>
-
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
                     {/* Name Field */}
                     <FormField
@@ -209,7 +211,7 @@ export default function Forms() {
                               </div>
                               <Input
                                 placeholder=" Full Name in English "
-                                className="pl-10"
+                                className="pl-10 uppercase"
                                 {...field}
                                 disabled={loading}
                               />
@@ -348,7 +350,6 @@ export default function Forms() {
                       )}
                     />
                   </div>
-
                   {/* Uploads Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                     {/* Citizenship Front Upload */}
@@ -455,7 +456,6 @@ export default function Forms() {
                       )}
                     />
                   </div>
-
                   <Button
                     className="w-full hover:bg-secondary"
                     type="submit"
