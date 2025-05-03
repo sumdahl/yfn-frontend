@@ -12,7 +12,7 @@ interface SectorStore {
   isLoading: boolean;
   setSectorData: (sectorData: SectorData) => void;
   setLoading: (isLoading: boolean) => void;
-  updateMinuteInfo: (minuteInfo: { uploaded: boolean }) => void; // uploaded could or not be verify
+  updateMinuteInfo: (minuteInfor: unknown) => void;
   clearSectorData: () => void;
 }
 

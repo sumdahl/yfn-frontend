@@ -28,10 +28,18 @@ import { useCommonForm } from "./use-common-form";
 import NepaliDatePicker from "@zener/nepali-datepicker-react";
 import "@zener/nepali-datepicker-react/index.css";
 
+import useSectorStore from "@/stores/sector-store";
 import { MinuteUpload } from "./components/minute-upload";
 
 export default function Forms() {
   const { onSubmit, loading, ...form } = useCommonForm(); //send userId here
+
+  const { sectorData } = useSectorStore();
+  const minuteAllowed = sectorData?.minute_details?.is_minute_allowed ?? false;
+
+  console.log("Minute Allowed: FORM component", minuteAllowed);
+
+  const level = sectorData?.sector_list[0].sector_details.level;
 
   const [passportPreview, setPassportPreview] = useState<string | null>(null);
   const [frontPreview, setFrontPreview] = useState<string | null>(null);
@@ -58,7 +66,7 @@ export default function Forms() {
 
   return (
     <div>
-      {allowed ? (
+      {minuteAllowed ? (
         <MinuteUpload />
       ) : (
         <div className="flex h-full flex-col gap-4 md:overflow-hidden p-8 lg:max-w-4/5 xl:max-w-3/5 mx-auto">
@@ -77,7 +85,7 @@ export default function Forms() {
                       राष्ट्रिय युवा संघ नेपाल
                     </h1>{" "}
                     <h2 className="text-primary">
-                      {sectorDetails?.level || "केन्द्रीय कमिटी"}
+                      {level || "केन्द्रीय कमिटी"}
                     </h2>
                     {/*import header component and replace with backend data  */}
                   </div>

@@ -13,6 +13,10 @@ export const MinuteUpload = () => {
   const isAuthenticated = useIsAuthenticated();
 
   const { sectorData, updateMinuteInfo } = useSectorStore();
+  console.log(
+    "Minute allowed minute upload component: ",
+    sectorData?.minute_details.is_minute_allowed
+  );
   const minuteDetails = sectorData?.minute_details;
 
   const [isUploading, setIsUploading] = useState(false);
@@ -31,8 +35,12 @@ export const MinuteUpload = () => {
   }, [reset]);
 
   // Defensive checks
-  const allowed = minuteDetails?.is_minute_allowed ?? false;
+  const allowed = minuteDetails?.is_minute_allowed ?? false; //test success.
+  // const allowed = true;
+  // console.log(allowed);
+
   const alreadyUploaded = !!minuteDetails?.minute_info;
+  console.log("Already uploaded: ", alreadyUploaded); //should display minute_info
 
   if (!isAuthenticated || !allowed) return null;
 
@@ -51,7 +59,8 @@ export const MinuteUpload = () => {
 
       toast.success(response.data?.message || "Minute uploaded successfully");
 
-      updateMinuteInfo({ uploaded: true });
+      const minuteInfo = response.data.data?.minute_details.minute_info;
+      updateMinuteInfo(minuteInfo);
 
       // Optionally, set local state to reflect the uploaded status
       setUploaded(true);
@@ -131,6 +140,7 @@ export const MinuteUpload = () => {
         {!uploaded && file && (
           <Button
             variant="outline"
+            type="submit"
             className="absolute bottom-4 right-4 bg-primary text-white"
             onClick={handleSubmit}
             disabled={isUploading}

@@ -3,7 +3,7 @@
 export interface SectorData {
   minute_details: {
     is_minute_allowed: boolean;
-    minute_info?: unknown; // Optional, as it's null in the provided response
+    minute_info: unknown;
   };
   sector_list: {
     sector_details: {
