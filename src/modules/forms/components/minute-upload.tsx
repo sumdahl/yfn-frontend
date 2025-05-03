@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useFileDialog } from "@/hooks/use-file-dialog";
-import { Upload, File, Loader2, CheckCircle } from "lucide-react";
+import { Upload, File, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { api } from "@/api/axios";
 import { toast } from "sonner";
 import { useIsAuthenticated } from "@/stores/auth-store";
 import useSectorStore from "@/stores/sector-store";
 import { FileUp } from "lucide-react";
+import MinuteUploadSuccess from "./minute-success";
 
 export const MinuteUpload = () => {
   const isAuthenticated = useIsAuthenticated();
@@ -16,8 +17,10 @@ export const MinuteUpload = () => {
   const updateMinuteInfo = useSectorStore((s) => s.updateMinuteInfo);
 
   const minuteDetails = sectorData?.minute_details;
-  console.log("Minute Details: ", minuteDetails);
+  const allowed = minuteDetails?.is_minute_allowed ?? false;
+  const minuteInfo = minuteDetails?.minute_info;
 
+  //State for managing the upload process
   const [isUploading, setIsUploading] = useState(false);
   const [uploaded, setUploaded] = useState(false);
 
@@ -31,18 +34,20 @@ export const MinuteUpload = () => {
   console.log("Files:", file);
 
   useEffect(() => {
+    //Clean up the component unmounts or reset the file dialog
     return () => reset();
   }, [reset]);
 
-  const allowed = minuteDetails?.is_minute_allowed ?? false;
+  const alreadyUploaded = !!minuteInfo;
 
-  const alreadyUploaded = !!minuteDetails?.minute_info;
+  useEffect(() => {
+    //Show a toast once the minute is allowed
+    if (alreadyUploaded) {
+      toast.info("तपाइंले minute अप्लोड गरिसक्नु भएको छ");
+    }
+  }, [alreadyUploaded]);
 
-  if (alreadyUploaded) {
-    toast.info("You have already uploaded minute PDF.");
-  }
-  console.log("Already uploaded: ", alreadyUploaded); //should display minute_info
-
+  //If the user is not authenticated or not allowed to upload a minute, return nothing.
   if (!isAuthenticated || !allowed) return null;
 
   // Handle file upload
@@ -54,18 +59,21 @@ export const MinuteUpload = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await api.post("/minute", formData);
+      const response = await api.post("/minute", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }); //multipar/form-data
 
-      console.log("API response:", response.data);
+      console.log("Response after uploading minute:", response);
 
       toast.success(response.data?.message || "Minute uploaded successfully");
 
-      const minuteInfo = response.data.data?.minute_details.minute_info; //code fine but initially need to refresh
+      const updatedMinuteInfo = response.data.data?.minute_details.minute_info;
       console.log("Minute info :", minuteInfo);
-      updateMinuteInfo(minuteInfo);
+      updateMinuteInfo(updatedMinuteInfo);
 
-      // Optionally, set local state to reflect the uploaded status
-      setUploaded(true);
+      setUploaded(true); //Mark the upload as successful
     } catch (error) {
       console.error("Upload failed:", error);
       toast.error("Error uploading PDF.");
@@ -85,21 +93,7 @@ export const MinuteUpload = () => {
       </CardHeader>
       <CardContent className="my-0 relative">
         {alreadyUploaded || uploaded ? (
-          <div className="flex flex-col items-center justify-center text-center gap-4 py-10">
-            <CheckCircle className="text-green-600 w-16 h-16" />
-            <h2 className="text-green-700 text-3xl font-semibold">
-              Minute successfully अप्लोड भयो
-            </h2>
-            <h3 className="text-muted-foreground text-2xl">
-              कृपया अब फारम भर्नुहोस्
-            </h3>
-            {file && (
-              <div className="text-sm text-muted-foreground flex items-center gap-2 mt-2">
-                <File className="w-4 h-4 text-green-600" />
-                <span>{file.name}</span>
-              </div>
-            )}
-          </div>
+          <MinuteUploadSuccess fileName={file?.name} /> // {file?.name || minuteInfo?.file_path}
         ) : (
           <div className="flex flex-col gap-6">
             <div
@@ -145,7 +139,7 @@ export const MinuteUpload = () => {
           <Button
             variant="outline"
             type="submit"
-            className="absolute bottom-4 right-4 bg-primary text-white"
+            className="absolute bottom-4 right-4 bg-primary hover:bg-secondary text-white"
             onClick={handleSubmit}
             disabled={isUploading}
           >

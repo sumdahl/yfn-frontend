@@ -35,3 +35,14 @@ export interface SectorApiResponse {
   message: string;
   data: SectorData;
 }
+
+//response data after uploading minute
+// minute_details: {
+//   is_minute_allowed: boolean;
+//   minute_details: {
+//     "minute_info" : {
+//       "id" : 1,
+//       "file" : ""
+//     }
+//   }
+// };

@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster } from "./components/ui/sonner.tsx";
 import "./index.css";
 import NotFound from "./modules/404/index.tsx";
-import Forms from "./modules/forms/index.tsx";
+import FormPage from "./modules/forms/index.tsx";
 import LoginForm from "./modules/login/index.tsx";
 
 import { ProtectedRoute } from "./routes/protected-routes.tsx";
@@ -27,7 +27,7 @@ createRoot(document.getElementById("root")!).render(
           </ProtectedRoute>
         }
       >
-        <Route index element={<Forms />} />
+        <Route index element={<FormPage />} />
       </Route>
 
       <Route

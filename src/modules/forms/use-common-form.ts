@@ -5,15 +5,15 @@ import { useCallback, useState } from "react";
 import { api } from "@/api/axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-// import useSectorStore from "@/stores/sector-store";
+import useSectorStore from "@/stores/sector-store";
 
 export const useCommonForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
-  // const userId = useSectorStore((s) => s.sectorMemberList[1].id)
+  const userId = useSectorStore((s) => s.sectorMemberList[0].id); //fix this tomorrow
   const navigate = useNavigate();
-  // const userId = sectorMemberList?.id;
-  const userId = 1942;
+
+  // const userId = 1942;
 
   // use that userId here to perform patch request
   //user/:userId
@@ -45,7 +45,7 @@ export const useCommonForm = () => {
 
       try {
         const formData = new FormData();
-        formData.append("name", data.name);
+        formData.append("name", data.name); //nepali name asked to be removed
         formData.append("name_en", data.name_en);
         formData.append(
           "dob",

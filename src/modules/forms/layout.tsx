@@ -41,7 +41,7 @@ export default function FormLayout() {
 
   if (loading)
     return (
-      <div className="flex justify-center h-svh items-center">
+      <div className="flex bg-primary justify-center h-svh items-center">
         <Loader2 className="animate-spin size-10" />
       </div>
     );

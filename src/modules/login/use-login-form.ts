@@ -38,7 +38,7 @@ export const useLoginForm = () => {
         }
         update(res.access_token, res.user_details);
 
-        navigate("/forms", { replace: true });
+        navigate("/forms", { replace: true }); //now serve another component
       } catch (error: unknown) {
         const axiosError = error as AxiosError;
         if (axiosError.response?.status === 400) {
