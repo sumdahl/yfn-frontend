@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -7,11 +8,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useLoginForm } from "./use-login-form";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
-import { Card } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
+import { useLoginForm } from "./use-login-form";
 
 export default function LoginForm() {
   const { onSubmit, loading, ...form } = useLoginForm();
@@ -21,7 +21,6 @@ export default function LoginForm() {
         <div className="flex flex-col items-center justify-center mx-auto w-11/12 sm:w-4/5 md:min-w-4xl max-w-6xl">
           <div className="w-full">
             <div className="flex flex-col lg:flex-row lg:items-stretch shadow-xl rounded-xl overflow-hidden">
-              {/* Red section with logo and title */}
               <div className="bg-primary text-white text-center p-6 sm:p-8 w-full lg:w-1/2 flex flex-col items-center justify-center md:py-16">
                 <div className="max-w-md mx-auto">
                   <img
