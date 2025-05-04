@@ -1,12 +1,12 @@
-import { MinuteUpload } from "./components/minute-upload";
-import Forms from "./common-form";
-import { useEffect } from "react";
-import { toast } from "sonner";
 import useSectorStore from "@/stores/sector-store";
+import { useEffect, useMemo } from "react";
+import { toast } from "sonner";
+import Forms from "./common-form";
 import MinuteUploadSuccess from "./components/minute-success";
+import { MinuteUpload } from "./components/minute-upload";
 export default function FormPage() {
   console.log("Component mounted main page formpage");
-  const minuteDetails = useSectorStore((s) => s.sectorData?.minute_details);
+  const minuteDetails = useSectorStore(s => s.sectorData?.minute_details);
   const minuteAllowed = minuteDetails?.is_minute_allowed ?? false;
   const minuteInfo = minuteDetails?.minute_info;
 
@@ -17,10 +17,6 @@ export default function FormPage() {
   // const minuteInfo = minuteDetails?.minute_info;
 
   console.log(minuteDetails);
-  // const shouldShowMinuteUpload = false;
-
-  // Show MinuteUpload if it's allowed and no minute has been uploaded yet
-  const shouldShowMinuteUpload = minuteAllowed && !minuteInfo;
 
   useEffect(() => {
     if (minuteAllowed && minuteInfo !== null) {
@@ -28,22 +24,20 @@ export default function FormPage() {
     }
   }, [minuteAllowed, minuteInfo]);
 
-  return (
-    <div>
-      {minuteAllowed ? (
-        minuteInfo ? (
-          <>
-            <MinuteUploadSuccess />
-            <Forms />
-          </>
-        ) : (
+  const Comp = useMemo(() => {
+    if (!minuteInfo)
+      return (
+        <div className="pt-8">
           <MinuteUpload />
-        )
-      ) : (
+        </div>
+      );
+    return (
+      <div className="space-y-0 pt-8">
+        <MinuteUploadSuccess />;
         <Forms />
-      )}
-    </div>
-  );
-}
+      </div>
+    );
+  }, [minuteInfo]);
 
-// return <div>{shouldShowMinuteUpload ? <MinuteUpload /> : <Forms />}</div>;
+  return <>{Comp}</>;
+}

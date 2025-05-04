@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -7,27 +8,22 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useLoginForm } from "./use-login-form";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
-import { Card } from "@/components/ui/card";
-import { Loader2, User, Lock } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { LOGO } from "@/constants/logo";
+import { cn } from "@/lib/utils";
+import { Loader2, Lock, User } from "lucide-react";
+import { useLoginForm } from "./use-login-form";
 
 export default function LoginForm() {
   const { onSubmit, loading, ...form } = useLoginForm();
   return (
     <div>
-      <Card className="bg-muted shadow-lg flex justify-center items-center min-h-screen">
-        <div className="flex flex-col items-center justify-center mx-auto w-11/12 sm:w-4/5 md:min-w-4xl max-w-6xl h-full">
-          <div className="w-full h-full">
-            <div className="flex flex-col lg:flex-row lg:items-stretch shadow-xl rounded-xl overflow-hidden h-full">
-              {/* Blue section with logo and title */}
-              <div
-                className="bg-primary text-white text-center p-6 sm:p-8 w-full h-1/2 
-                lg:h-auto lg:w-1/2 flex flex-col items-center justify-center  md:py-16"
-              >
+      <Card className="bg-muted flex justify-center items-center min-h-screen">
+        <div className="flex flex-col items-center justify-center mx-auto w-11/12 sm:w-4/5 md:min-w-4xl max-w-6xl">
+          <div className="w-full">
+            <div className="flex flex-col lg:flex-row lg:items-stretch shadow-xl rounded-xl overflow-hidden">
+              <div className="bg-primary text-white text-center p-6 sm:p-8 w-full lg:w-1/2 flex flex-col items-center justify-center md:py-16">
                 <div className="max-w-md mx-auto">
                   {/*logo */}
                   <img
