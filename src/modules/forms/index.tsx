@@ -20,7 +20,7 @@ export default function FormPage() {
   // const shouldShowMinuteUpload = false;
 
   // Show MinuteUpload if it's allowed and no minute has been uploaded yet
-  const shouldShowMinuteUpload = minuteAllowed && !minuteInfo;
+  // const shouldShowMinuteUpload = minuteAllowed && !minuteInfo;
 
   useEffect(() => {
     if (minuteAllowed && minuteInfo !== null) {

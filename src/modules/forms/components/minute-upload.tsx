@@ -54,6 +54,23 @@ export const MinuteUpload = () => {
     }
   }, [alreadyUploaded]);
 
+  useEffect(() => {
+    const fetchMinuteInfo = async () => {
+      try {
+        const res = await api.get("/sector");
+        const data = await res.data;
+        console.log("minute_details", data.data.minute_details?.minute_info);
+        if (data?.data?.minute_details?.minute_info) {
+          updateMinuteInfo(data.minute_details.minute_info);
+        }
+      } catch (error) {
+        console.error("Failed to fetch sector data.", error);
+      }
+    };
+
+    fetchMinuteInfo();
+  }, [updateMinuteInfo]);
+
   //If the user is not authenticated or not allowed to upload a minute, return nothing.
   if (!isAuthenticated || !allowed) return null;
 
