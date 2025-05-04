@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import FormHeader from "./components/form-header";
+import NepaliDatePicker from "@zener/nepali-datepicker-react";
+import "@zener/nepali-datepicker-react/index.css";
 import {
   Calendar,
   FileImage,
@@ -23,9 +24,8 @@ import {
   Users,
 } from "lucide-react";
 import { useRef, useState } from "react";
+import FormHeader from "./components/form-header";
 import { useCommonForm } from "./use-common-form";
-import NepaliDatePicker from "@zener/nepali-datepicker-react";
-import "@zener/nepali-datepicker-react/index.css";
 
 export default function Forms() {
   const { onSubmit, loading, ...form } = useCommonForm(); //send userId here
@@ -55,7 +55,7 @@ export default function Forms() {
 
   return (
     <div>
-      <div className="flex h-full flex-col gap-4 md:overflow-hidden p-8 lg:max-w-4/5 xl:max-w-3/5 mx-auto">
+      <div className="flex h-full flex-col gap-4 md:overflow-hidden lg:max-w-4/5 xl:max-w-3/5 mx-auto">
         <Card className="shadow-lg p-6">
           <Form {...form}>
             <form onSubmit={onSubmit}>
@@ -93,12 +93,12 @@ export default function Forms() {
                             type="file"
                             accept=".jpg,.jpeg"
                             className="hidden"
-                            ref={(el) => {
+                            ref={el => {
                               ref(el); // for RHF
                               inputRef.current = el; // for manual click
                             }}
                             {...fieldProps}
-                            onChange={(e) => {
+                            onChange={e => {
                               const file = e.target.files?.[0];
                               if (file) {
                                 onChange(file);
@@ -195,7 +195,7 @@ export default function Forms() {
                             <NepaliDatePicker
                               // {...field}
                               value={field.value}
-                              onChange={(e) => {
+                              onChange={e => {
                                 const val = e?.toADasDate();
                                 field.onChange(val);
                               }}
@@ -238,7 +238,7 @@ export default function Forms() {
                               className="pl-10"
                               maxLength={10}
                               {...field}
-                              onChange={(e) => {
+                              onChange={e => {
                                 const digitsOnly = e.target.value.replace(
                                   /\D/g,
                                   ""
@@ -311,7 +311,10 @@ export default function Forms() {
                   <FormField
                     control={form.control}
                     name="citizenship_front"
-                    render={({ field: { value, onChange, ...fieldProps } }) => (
+                    render={({
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                      field: { value: _, onChange, ...fieldProps },
+                    }) => (
                       <FormItem>
                         <FormLabel>
                           नागरिकता अगाडी
@@ -328,7 +331,7 @@ export default function Forms() {
                                 accept=".jpg,.jpeg"
                                 className="pl-10"
                                 {...fieldProps}
-                                onChange={(e) => {
+                                onChange={e => {
                                   const file = e.target.files?.[0];
                                   if (file) {
                                     onChange(file);
@@ -362,6 +365,7 @@ export default function Forms() {
                   <FormField
                     control={form.control}
                     name="citizenship_back"
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     render={({ field: { value, onChange, ...fieldProps } }) => (
                       <FormItem>
                         <FormLabel>
@@ -377,7 +381,7 @@ export default function Forms() {
                                 accept=".jpg,.jpeg"
                                 className="pl-10"
                                 {...fieldProps}
-                                onChange={(e) => {
+                                onChange={e => {
                                   const file = e.target.files?.[0];
                                   if (file) {
                                     onChange(file);
