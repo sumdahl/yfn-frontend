@@ -4,11 +4,9 @@ import { useAuthStore } from "@/stores/auth-store";
 
 export const baseURL = "https://api.tarunregmi.com.np";
 
-// export const baseURL = "192.168.45.6:8080";
-
 export const api = axios.create({ baseURL: baseURL + "/api" });
 
-api.interceptors.request.use((config) => {
+api.interceptors.request.use(config => {
   const token = useAuthStore.getState().token;
   if (token) {
     config.headers["Authorization"] = `Bearer ${token}`;
@@ -18,8 +16,8 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
   // incase of Unauthorized request
-  (response) => response,
-  (error) => {
+  response => response,
+  error => {
     if (error.response?.status === 401) {
       useAuthStore.getState().logout();
       window.location.href = "/login"; // Redirect on unauthorized
