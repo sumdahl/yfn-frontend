@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster } from "./components/ui/sonner.tsx";
 import "./index.css";
 import NotFound from "./modules/404/index.tsx";
+import Dashboard from "./modules/dashboard/index.tsx";
 import { MinuteUpload } from "./modules/forms/components/minute-upload.tsx";
 import Forms from "./modules/forms/index.tsx";
 import LoginForm from "./modules/login/index.tsx";
@@ -34,6 +35,7 @@ createRoot(document.getElementById("root")!).render(
             </ProtectedRoute>
           }
         />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/success" element={<FormSuccess />} />
         <Route path="/profile" element={<ProfileCard />} />
         <Route path="*" element={<NotFound />} />

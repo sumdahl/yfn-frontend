@@ -20,12 +20,13 @@ interface ISectorLst {
   sector_member_list: ISectorMember[];
 }
 
-interface ISectorMember {
+export interface ISectorMember {
   id: number;
   name: string | null;
   name_en: string | null;
   username: string | null;
   role: ROLE | null;
+  is_approved?: boolean;
   position: string;
   phone: string | null;
   dob: string | null;
