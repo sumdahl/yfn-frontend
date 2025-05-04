@@ -5,10 +5,19 @@ import { toast } from "sonner";
 import useSectorStore from "@/stores/sector-store";
 
 export default function FormPage() {
-  const sectorData = useSectorStore((s) => s.sectorData);
-  const minuteDetails = sectorData?.minute_details;
+  console.log("Component mounted main page formpage");
+  const minuteDetails = useSectorStore((s) => s.sectorData?.minute_details);
   const minuteAllowed = minuteDetails?.is_minute_allowed ?? false;
   const minuteInfo = minuteDetails?.minute_info;
+
+  console.log("minute info", minuteInfo);
+  console.log("minute allowed: ", minuteAllowed);
+  console.log("minute info", minuteDetails?.minute_info);
+  // const minuteAllowed = minuteDetails?.is_minute_allowed ?? false;
+  // const minuteInfo = minuteDetails?.minute_info;
+
+  console.log(minuteDetails);
+  // const shouldShowMinuteUpload = false;
 
   // Show MinuteUpload if it's allowed and no minute has been uploaded yet
   const shouldShowMinuteUpload = minuteAllowed && !minuteInfo;

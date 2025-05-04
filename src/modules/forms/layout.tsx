@@ -6,12 +6,14 @@ import { useCallback, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
 export default function FormLayout() {
+  console.log("FormLayout mounted");
   const setSectorData = useSectorStore((e) => e.setSectorData);
   const setLoading = useSectorStore((e) => e.setLoading);
   const loading = useSectorStore((e) => e.isLoading);
 
   const fetchSectorInformation = useCallback(async () => {
     try {
+      console.log("Not coming request here..");
       setLoading(true);
       const sectorRes = await api.get<SectorApiResponse>("/sector");
       const sectorData = sectorRes.data;
@@ -41,7 +43,7 @@ export default function FormLayout() {
 
   if (loading)
     return (
-      <div className="flex bg-primary justify-center h-svh items-center">
+      <div className="flex justify-center h-svh items-center">
         <Loader2 className="animate-spin size-10" />
       </div>
     );

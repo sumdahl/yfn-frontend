@@ -62,11 +62,10 @@ export const CommonFormSchema = z.object({
 
   citizenship_no: z
     .string()
-    .max(50, { message: "नागरिकता नं ५० अक्षरभन्दा कम हुनुपर्छ" })
-    .regex(/^[0-9-]+$/, {
-      message: "नागरिकता नं केवल अंक र '-' मात्र हुनुपर्छ",
-    }),
-
+    .max(50, { message: "नागरिकता नं ५० अक्षरभन्दा कम हुनुपर्छ" }),
+  // .regex(/^[0-9-]+$/, {
+  //   message: "नागरिकता नं केवल अंक र '-' मात्र हुनुपर्छ",
+  // }),
   citizenship_front: z
     .custom<File>(
       (file) => file instanceof File,

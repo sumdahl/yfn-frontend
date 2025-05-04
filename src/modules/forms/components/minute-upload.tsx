@@ -14,11 +14,16 @@ export const MinuteUpload = () => {
   const isAuthenticated = useIsAuthenticated();
 
   const sectorData = useSectorStore((s) => s.sectorData);
+
   const updateMinuteInfo = useSectorStore((s) => s.updateMinuteInfo);
 
   const minuteDetails = sectorData?.minute_details;
   const allowed = minuteDetails?.is_minute_allowed ?? false;
   const minuteInfo = minuteDetails?.minute_info;
+
+  // const sectorData = useSectorStore((s) => {
+  //   console.log("sector data:", );
+  // });
 
   //State for managing the upload process
   const [isUploading, setIsUploading] = useState(false);

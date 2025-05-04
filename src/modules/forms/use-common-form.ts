@@ -10,11 +10,11 @@ import useSectorStore from "@/stores/sector-store";
 export const useCommonForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const userId = useSectorStore((s) => s.sectorMemberList[0].id); //fix this tomorrow
+  const firstMember = useSectorStore((s) => s.sectorMemberList[0]);
+  const userId = firstMember?.id ?? null; //ensures data not be null
+  console.log("UserId: ", userId);
+
   const navigate = useNavigate();
-
-  // const userId = 1942;
-
   // use that userId here to perform patch request
   //user/:userId
   // const [loading, setLoading] = useState(false);

@@ -4,6 +4,8 @@ import { useAuthStore } from "@/stores/auth-store";
 
 export const baseURL = "https://api.tarunregmi.com.np";
 
+// export const baseURL = "192.168.45.6:8080";
+
 export const api = axios.create({ baseURL: baseURL + "/api" });
 
 api.interceptors.request.use((config) => {
