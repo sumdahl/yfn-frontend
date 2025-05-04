@@ -10,6 +10,7 @@ import { MinuteUpload } from "./modules/forms/components/minute-upload.tsx";
 import Forms from "./modules/forms/index.tsx";
 import LoginForm from "./modules/login/index.tsx";
 import ProfileCard from "./modules/profile/index.tsx";
+import FormSuccess from "./modules/succcess/index.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -33,6 +34,7 @@ createRoot(document.getElementById("root")!).render(
             </ProtectedRoute>
           }
         />
+        <Route path="/success" element={<FormSuccess />} />
         <Route path="/profile" element={<ProfileCard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
