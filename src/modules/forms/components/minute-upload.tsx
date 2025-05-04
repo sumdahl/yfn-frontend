@@ -18,12 +18,10 @@ export const MinuteUpload = () => {
   const updateMinuteInfo = useSectorStore((s) => s.updateMinuteInfo);
 
   const minuteDetails = sectorData?.minute_details;
+  console.log(minuteDetails);
   const allowed = minuteDetails?.is_minute_allowed ?? false;
   const minuteInfo = minuteDetails?.minute_info;
-
-  // const sectorData = useSectorStore((s) => {
-  //   console.log("sector data:", );
-  // });
+  console.log("Minute info:", minuteInfo);
 
   //State for managing the upload process
   const [isUploading, setIsUploading] = useState(false);
@@ -37,6 +35,10 @@ export const MinuteUpload = () => {
 
   const file = files?.[0];
   console.log("Files:", file);
+
+  // useEffect(() => {
+  //   //fetch data
+  // });
 
   useEffect(() => {
     //Clean up the component unmounts or reset the file dialog
@@ -74,7 +76,9 @@ export const MinuteUpload = () => {
 
       toast.success(response.data?.message || "Minute uploaded successfully");
 
+      // console.log(response.data.data?.)
       const updatedMinuteInfo = response.data.data?.minute_details.minute_info;
+      console.log(updatedMinuteInfo);
       console.log("Minute info :", minuteInfo);
       updateMinuteInfo(updatedMinuteInfo);
 

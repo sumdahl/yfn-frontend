@@ -8,7 +8,7 @@ interface Props {
 
 const MinuteUploadSuccess: React.FC<Props> = ({ fileName }) => {
   return (
-    <div className="flex flex-col gap-6 px-4 lg:px-8">
+    <div className="flex flex-col gap-6 mt-2 px-4 lg:px-8">
       <Card className="shadow-md border-green-500 border-2 p-6">
         <div
           className="flex flex-col items-center justify-center text-center gap-4"
